@@ -142,7 +142,6 @@
       will-change: transform;
       z-index: 10;
       pointer-events: none;
-      /* убираем max-width, убираем все transition кроме will-change */
     }
     .timers-section {
       background: #111;
@@ -292,12 +291,11 @@
     }
     function updateScrollEffects() {
       const scrollY = lastKnownScrollY;
-      // Высота, на которой начинается движение
       const blockRect = destroyBlock.getBoundingClientRect();
-      const blockHeight = blockRect.height || 1;
       const windowH = window.innerHeight;
-      // точка начала и конца движения таймерного окна
+      // точка начала движения чёрного окна
       const start = windowH * 0.4;
+      // доезжает до блока destroyBlock (чуть ниже надписи)
       const end = windowH - blockRect.bottom + 36;
       // прогресс от 0 до 1 по скроллу
       let progress = 0;
