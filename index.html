@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>УНИЧТОЖЬ ЕГЭ</title>
-  <meta name="color-scheme" content="light">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     html, body {
@@ -18,6 +15,7 @@
       font-family: 'Montserrat', Arial, sans-serif;
       overflow-x: hidden;
       scroll-behavior: smooth;
+      transition: background 0.5s;
     }
     body {
       min-height: 100vh;
@@ -29,30 +27,29 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      background: #fff;
       z-index: 1;
       overflow-x: hidden;
-      transition: background 0.6s cubic-bezier(.4,0,.2,1);
+      background: transparent;
     }
     .destroy-block {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 0.1em;
       margin-bottom: 55px;
       margin-top: 0;
       user-select: none;
       pointer-events: none;
-      transition: 
+      transition:
         color 0.6s cubic-bezier(.4,0,.2,1),
-        flex-direction 0.8s cubic-bezier(.4,0,.2,1),
-        gap 0.6s cubic-bezier(.4,0,.2,1),
-        justify-content 0.6s cubic-bezier(.4,0,.2,1),
+        flex-direction 0.7s cubic-bezier(.4,0,.2,1),
+        gap 0.7s cubic-bezier(.4,0,.2,1),
+        justify-content 0.7s cubic-bezier(.4,0,.2,1),
         transform 0.7s cubic-bezier(.4,0,.2,1);
-      gap: 0.1em;
     }
     .destroy-word {
-      opacity: 0;
+      opacity: 1;
       font-family: 'Montserrat', Arial, sans-serif;
       color: #111;
       font-weight: 700;
@@ -60,24 +57,17 @@
       line-height: 1.1;
       white-space: nowrap;
       margin: 0;
-      transition: 
-        color 0.6s cubic-bezier(.4,0,.2,1),
-        opacity 0.9s cubic-bezier(.4,0,.2,1),
-        transform 0.8s cubic-bezier(.4,0,.2,1),
-        font-size 0.6s cubic-bezier(.4,0,.2,1),
+      transition:
+        color 0.7s cubic-bezier(.4,0,.2,1),
+        font-size 0.7s cubic-bezier(.4,0,.2,1),
         margin 0.7s cubic-bezier(.4,0,.2,1);
-      will-change: transform, color, opacity, font-size;
       text-align: center;
     }
     .destroy-word.top {
-      font-size: clamp(2.4rem, 8vw, 5.8rem);
-      font-weight: 700;
-      animation: fadeInTop 1.1s 0.1s cubic-bezier(.4,0,.2,1) forwards;
+      font-size: clamp(2.2rem, 8vw, 5.5rem);
     }
     .destroy-word.bottom {
-      font-size: clamp(3rem, 10vw, 7.2rem);
-      font-weight: 700;
-      animation: fadeInBottom 1.1s 0.6s cubic-bezier(.4,0,.2,1) forwards;
+      font-size: clamp(3rem, 11vw, 8rem);
     }
     .destroy-block.oneline {
       flex-direction: row;
@@ -88,21 +78,12 @@
     .destroy-block.oneline .destroy-word {
       color: #fff;
       text-shadow: 0 2px 18px #222;
-      margin: 0 0.03em;
     }
     .destroy-block.oneline .top {
-      font-size: clamp(2.1rem, 6vw, 4.2rem);
+      font-size: clamp(2.1rem, 6vw, 4.5rem);
     }
     .destroy-block.oneline .bottom {
-      font-size: clamp(2.5rem, 7vw, 5rem);
-    }
-    @keyframes fadeInTop {
-      from { opacity: 0; transform: translateY(40px) scale(0.98);}
-      to   { opacity: 1; transform: translateY(0) scale(1);}
-    }
-    @keyframes fadeInBottom {
-      from { opacity: 0; transform: translateY(-40px) scale(0.98);}
-      to   { opacity: 1; transform: translateY(0) scale(1);}
+      font-size: clamp(2.5rem, 7vw, 5.8rem);
     }
     .arrow-container {
       position: absolute;
@@ -133,31 +114,36 @@
       0%, 100% { transform: translateY(0);}
       50% { transform: translateY(7px);}
     }
-    /* Таймерный блок на всю ширину! */
     .timers-section-wrap {
       position: fixed;
       left: 0;
       bottom: 0;
       width: 100vw;
-      will-change: transform;
+      height: 100vh;
       z-index: 10;
       pointer-events: none;
+      will-change: transform, background;
+      background: #111;
+      transform: translateY(100%);
+      transition: background 0.5s;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
     }
     .timers-section {
-      background: #111;
-      color: #fff;
+      width: 100vw;
+      max-width: 560px;
       border-radius: 32px 32px 0 0;
       padding: 48px 18px 32px 18px;
       box-shadow: 0 2px 32px rgba(0,0,0,0.16);
-      min-height: 390px;
+      margin: 0 auto;
+      text-align: center;
+      font-family: 'Montserrat', Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      width: 100%;
-      margin: 0 auto;
-      text-align: center;
-      font-family: 'Montserrat', Arial, sans-serif;
+      background: transparent;
     }
     .timers-section .datetime {
       font-size: 1.16em;
@@ -167,7 +153,7 @@
       letter-spacing: 0.03em;
     }
     .timers-section .timer {
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-family: 'Fira+Mono', 'Fira Mono', 'Consolas', 'Menlo', monospace;
       font-size: 2.1em;
       margin: 28px 0 8px 0;
       letter-spacing: 0.05em;
@@ -179,7 +165,7 @@
       font-size: 0.98em;
       color: #dfdfdf;
       margin-bottom: 10px;
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-family: 'Fira+Mono', 'Fira Mono', 'Consolas', 'Menlo', monospace;
     }
     .timers-section .footer-text {
       margin-top: 34px;
@@ -188,17 +174,6 @@
       color: #ffa726;
       letter-spacing: 0.04em;
       font-family: 'Montserrat', Arial, sans-serif;
-    }
-    .white-top {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      width: 100vw;
-      height: 120px;
-      background: #fff;
-      pointer-events: none;
-      user-select: none;
-      box-shadow: 0 24px 50px 0 #fff, 0 1px 0 0 #fff;
     }
     @media (max-width: 600px) {
       .timers-section, .timers-section-wrap {
@@ -210,12 +185,10 @@
       .destroy-word.bottom {font-size: 2.7em;}
       .destroy-block.oneline .top {font-size: 1.2em;}
       .destroy-block.oneline .bottom {font-size: 1.5em;}
-      .white-top {height: 82px;}
     }
   </style>
 </head>
 <body>
-  <div class="white-top"></div>
   <section class="hero" id="hero">
     <div class="destroy-block" id="destroyBlock">
       <span class="destroy-word top">УНИЧТОЖЬ</span>
@@ -272,54 +245,59 @@
       updateCountdowns();
     }, 1000);
 
-    // Плавное движение чёрного окна по скроллу
+    // Скроллинг-анимация
     const destroyBlock = document.getElementById('destroyBlock');
     const timersWrap = document.getElementById('timersWrap');
-    const heroSection = document.getElementById('hero');
-    let lastKnownScrollY = 0;
     let ticking = false;
 
+    function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
+
     function onScroll() {
-      lastKnownScrollY = window.scrollY;
-      requestTick();
-    }
-    function requestTick() {
       if (!ticking) {
-        requestAnimationFrame(updateScrollEffects);
+        requestAnimationFrame(handleScroll);
         ticking = true;
       }
     }
-    function updateScrollEffects() {
-      const scrollY = lastKnownScrollY;
-      const blockRect = destroyBlock.getBoundingClientRect();
+
+    function handleScroll() {
+      // Основные параметры
+      const scrollY = window.scrollY;
       const windowH = window.innerHeight;
-      // точка начала движения чёрного окна
-      const start = windowH * 0.4;
-      // доезжает до блока destroyBlock (чуть ниже надписи)
-      const end = windowH - blockRect.bottom + 36;
-      // прогресс от 0 до 1 по скроллу
-      let progress = 0;
-      if(scrollY > start) {
-        progress = Math.min(1, (scrollY - start) / (windowH - start - 36));
-      }
-      // позиция от "внизу" до "упёрлось в надпись"
-      const from = windowH;
-      const to = end;
-      const currentY = from - (from - to) * progress;
-      timersWrap.style.transform = `translateY(${-currentY}px)`;
-      // надпись собирается в строку при progress > 0.25
-      if (progress > 0.25) {
+      const blockRect = destroyBlock.getBoundingClientRect();
+      const blockBottomFromTop = blockRect.bottom + scrollY;
+
+      // --- Эффект надписи ---
+      // Начало анимации - через 20% экрана, конец - через 65%
+      const onelineStart = windowH * 0.20;
+      const onelineEnd = windowH * 0.65;
+      const onelineProgress = clamp((scrollY - onelineStart) / (onelineEnd - onelineStart), 0, 1);
+
+      if (onelineProgress > 0.01) {
         destroyBlock.classList.add('oneline');
+        destroyBlock.style.opacity = String(1 - 0.3 * onelineProgress);
       } else {
         destroyBlock.classList.remove('oneline');
+        destroyBlock.style.opacity = "1";
       }
+      // --- Эффект таймерного окна ---
+      // Начало анимации - через 35% экрана, конец - когда окно займет весь экран
+      const timersStart = windowH * 0.35;
+      const timersEnd = windowH * 0.99;
+      const timersProgress = clamp((scrollY - timersStart) / (timersEnd - timersStart), 0, 1);
+
+      // translateY: от 100% (невидимо) до 0% (вся страница)
+      timersWrap.style.transform = `translateY(${(1 - timersProgress) * 100}%)`;
+
+      // background: от #111 (в самом конце) до прозрачного (в начале)
+      timersWrap.style.background = `rgba(17,17,17,${timersProgress})`;
+
       ticking = false;
     }
 
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', () => setTimeout(updateScrollEffects, 10));
+    window.addEventListener('resize', handleScroll);
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(updateScrollEffects, 100);
+      setTimeout(handleScroll, 100);
     });
   </script>
 </body>
