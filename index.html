@@ -22,7 +22,6 @@
       width: 100vw;
       overflow-y: auto;
     }
-
     .snap-container {
       scroll-snap-type: y mandatory;
       height: 100vh;
@@ -33,7 +32,6 @@
       width: 100vw;
       scroll-snap-align: start;
     }
-
     .hero-section {
       display: flex;
       flex-direction: column;
@@ -84,7 +82,6 @@
       0%, 100% { transform: translateY(0);}
       50% { transform: translateY(7px);}
     }
-
     .main-black-block {
       background: #111;
       min-width: 100vw;
@@ -172,19 +169,19 @@
       box-sizing: border-box;
     }
     .timer-row .timer {
-  flex: 0 0 140px;
-  text-align: left;
-  font-size: 1.4em;
-  color: #fff;
-  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-  font-weight: 700;
-  min-width: 140px;
-  max-width: 250px;
-  white-space: nowrap;
-  overflow: visible;
-  text-shadow: 0 0 4px #000, 0 2px 8px #111c;
-  box-sizing: border-box;
-}
+      flex: 0 0 140px;
+      text-align: left;
+      font-size: 1.4em;
+      color: #fff;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-weight: 700;
+      min-width: 140px;
+      max-width: 250px;
+      white-space: nowrap;
+      overflow: visible;
+      text-shadow: 0 0 4px #000, 0 2px 8px #111c;
+      box-sizing: border-box;
+    }
     .footer-text-art {
       width: 100%;
       font-family: 'Montserrat', Arial, sans-serif;
@@ -207,7 +204,6 @@
       pointer-events: none;
       z-index: 1;
     }
-
     @media (max-width: 1200px) {
       .footer-text-art { font-size: 4.2em; }
     }
@@ -336,7 +332,6 @@
         </div>
         <div class="footer-text-art">УДАЧИ 2к25</div>
       </div>
-      <!-- Таймеры для мобильных под мотивацией -->
       <div class="timers-list mobile" id="mobileTimers" style="display:none;">
         <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
         <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
@@ -347,11 +342,10 @@
     </section>
   </div>
   <script>
-    // Таймеры
     function updateCountdowns(prefix='') {
       const timers = [
         { id: `${prefix}timer1`, date: new Date('2025-05-27T10:00:00') },
-        { id: `${prefix}timer4`, date: new Date('2025-06-02T10:00:00') }, // Физика
+        { id: `${prefix}timer4`, date: new Date('2025-06-02T10:00:00') },
         { id: `${prefix}timer2`, date: new Date('2025-05-30T10:00:00') },
         { id: `${prefix}timer3`, date: new Date('2025-06-10T10:00:00') }
       ];
@@ -378,7 +372,6 @@
       updateCountdowns('m');
     }, 1000);
 
-    // Таймеры адаптивно + переключение "УДАЧИ"
     function handleResize() {
       const isMobile = window.matchMedia('(max-width: 900px)').matches;
       const rightBlock = document.getElementById('rightBlock');
