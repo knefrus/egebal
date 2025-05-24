@@ -8,6 +8,7 @@
   <style>
     html, body {
       margin: 0; padding: 0;
+      height: 100%;
       min-height: 100vh;
       background: #fff;
       color: #111;
@@ -15,25 +16,32 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
     }
-    body { min-height: 200vh; }
+    body {
+      height: 100vh;
+      min-height: 100vh;
+      width: 100vw;
+      overflow-y: auto;
+    }
+
+    .snap-container {
+      scroll-snap-type: y mandatory;
+      height: 100vh;
+      overflow-y: scroll;
+    }
+    .hero-section, .main-black-block {
+      min-height: 100vh;
+      width: 100vw;
+      scroll-snap-align: start;
+    }
 
     .hero-section {
-      min-height: 100vh;
-      background: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: #fff;
       position: relative;
       z-index: 2;
-      transition: opacity 0.7s, transform 0.8s cubic-bezier(.4,0,.2,1);
-      will-change: opacity, transform;
-    }
-    .hero-section.hide {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-40vh) scale(0.98);
-      transition: opacity 0.7s, transform 0.8s cubic-bezier(.4,0,.2,1);
     }
     .destroy-block {
       width: 100vw;
@@ -92,6 +100,9 @@
       width: 100vw;
       position: relative;
       z-index: 1;
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      transition: border-radius 0.3s;
     }
     .motivation-block {
       flex: 0 1 48vw;
@@ -119,14 +130,26 @@
       pointer-events: none; user-select: none; letter-spacing: 0.03em;
     }
     .right-block {
-      flex: 1 1 0; display: flex; flex-direction: column;
-      align-items: flex-end; justify-content: center;
-      min-width: 200px; max-width: 520px; gap: 2.5vh;
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-width: 260px;
+      max-width: 520px;
+      gap: 2.5vh;
       margin-top: 0;
+      position: relative;
     }
     .timers-list {
-      width: 100%; display: flex; flex-direction: column;
-      align-items: stretch; gap: 1.8em; margin-bottom: 2vh; margin-top: 2vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.8em;
+      margin-bottom: 2vh;
+      margin-top: 2vh;
+      z-index: 2;
     }
     .timer-row {
       display: flex;
@@ -155,20 +178,45 @@
       color: #fff;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
       font-weight: 700;
-      min-width: 120px;
+      min-width: 140px;
+      max-width: 250px;
+      white-space: nowrap;
+      overflow: visible;
       text-shadow: 0 0 4px #000, 0 2px 8px #111c;
       box-sizing: border-box;
     }
     .footer-text-art {
-      display: flex; flex-direction: row; align-items: flex-end; justify-content: flex-end;
-      width: 100%; margin-top: 4vh; margin-bottom: 1vh;
-      font-family: 'Montserrat', Arial, sans-serif; font-weight: 900;
-      letter-spacing: 0.05em; font-size: 4.4em; color: #ffa726;
-      line-height: 0.88; text-align: right; user-select: none;
+      width: 100%;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      font-size: 6em;
+      color: #ffa726;
+      line-height: 0.88;
+      user-select: none;
       text-shadow: 0 2px 18px #000, 0 0 6px #111;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: center;
+      margin-top: 8vh;
+      margin-bottom: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      /* Центрируем в правой половине */
+      width: 100%;
+      max-width: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    /* --- Мобильная адаптация --- */
+    @media (max-width: 1200px) {
+      .footer-text-art { font-size: 4.2em; }
+    }
+    @media (max-width: 1000px) {
+      .footer-text-art { font-size: 3em; }
+    }
     @media (max-width: 900px) {
       .main-black-block {
         flex-direction: column;
@@ -179,6 +227,8 @@
         min-height: unset;
         padding-top: 6vh;
         padding-bottom: 2vh;
+        border-top-left-radius: 28px;
+        border-top-right-radius: 28px;
       }
       .motivation-block {
         max-width: 96vw;
@@ -214,11 +264,25 @@
       }
       .timer-row .timer {
         text-align: left;
-        min-width: 90px;
-        flex: 0 0 120px;
+        min-width: 120px;
+        max-width: 300px;
         font-size: 1.08em;
+        white-space: nowrap;
+        overflow: visible;
       }
-      .footer-text-art { font-size: 2.1em; align-items: center;}
+      .footer-text-art {
+        position: static !important;
+        margin-top: 2vh;
+        margin-bottom: 1vh;
+        font-size: 2.1em;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        width: 100% !important;
+        left: auto;
+        right: auto;
+        pointer-events: none;
+      }
     }
     @media (max-width: 600px) {
       .motivation-block {
@@ -227,58 +291,63 @@
       }
       .timers-list.mobile { width: 99vw; padding: 14px 2vw 14px 2vw;}
       .timer-row { width: 100%;}
+      .footer-text-art { font-size: 1.25em !important; }
+      .timer-row .timer { min-width: 95px; }
     }
   </style>
 </head>
 <body>
-  <div class="hero-section" id="heroSection">
-    <div class="destroy-block">
-      <span class="destroy-word">УНИЧТОЖЬ</span>
-      <span class="destroy-word">ЕГЭ</span>
-    </div>
-    <div class="arrow-container" id="arrowContainer">
-      <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
-      <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
-      <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
-    </div>
-  </div>
-  <div class="main-black-block" id="mainBlackBlock">
-    <div class="motivation-block">
-      Слушай.<br>
-      Это не просто экзамен. Это — то, к чему мы шли.<br>
-      Месяцы подготовки, бессонные ночи, тонны материалов, переписанного, прорешанного.<br>
-      Это были не просто дни — это было настоящее испытание, проверка.<br>
-      И теперь — пора выходить на поле.<br><br>
-      Ты не один.<br>
-      С тобой — все те, кто вёл тебя к этой точке.<br>
-      Преподы из обычных и онлайн школ, которые верили в нас даже больше, чем мы сами.<br>
-      Те, кто каждый день твердил: «Ты справишься».<br>
-      Родители, которые поддерживали тебя.<br>
-      Друзья, которые шутили, что завалят, но всё равно готовились.<br>
-      Мы все вместе.<br><br>
-      ЕГЭ — это не конец света. Это проверка.<br>
-      Проверка нас, но мы уже готовы.<br>
-      И теперь оно дрожит, потому что мы идём.<br>
-      Сильные, упрямые, уставшие — но готовые.<br>
-      Мы сдадим. Мы пройдём. Мы УНИЧТОЖИМ.
-      <div class="motivation-author">by @mrknef</div>
-    </div>
-    <div class="right-block" id="rightBlock">
-      <div class="timers-list" id="desktopTimers">
-        <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="timer1"></span></div>
-        <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="timer4"></span></div>
-        <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="timer2"></span></div>
-        <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="timer3"></span></div>
+  <div class="snap-container">
+    <section class="hero-section">
+      <div class="destroy-block">
+        <span class="destroy-word">УНИЧТОЖЬ</span>
+        <span class="destroy-word">ЕГЭ</span>
       </div>
-      <div class="footer-text-art">УДАЧИ</div>
-    </div>
-    <!-- Таймеры для мобильных под мотивацией -->
-    <div class="timers-list mobile" id="mobileTimers" style="display:none;">
-      <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
-      <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
-      <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="mtimer2"></span></div>
-      <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="mtimer3"></span></div>
-    </div>
+      <div class="arrow-container">
+        <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
+        <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
+        <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
+      </div>
+    </section>
+    <section class="main-black-block">
+      <div class="motivation-block">
+        Слушай.<br>
+        Это не просто экзамен. Это — то, к чему мы шли.<br>
+        Месяцы подготовки, бессонные ночи, тонны материалов, переписанного, прорешанного.<br>
+        Это были не просто дни — это было настоящее испытание, проверка.<br>
+        И теперь — пора выходить на поле.<br><br>
+        Ты не один.<br>
+        С тобой — все те, кто вёл тебя к этой точке.<br>
+        Преподы из обычных и онлайн школ, которые верили в нас даже больше, чем мы сами.<br>
+        Те, кто каждый день твердил: «Ты справишься».<br>
+        Родители, которые поддерживали тебя.<br>
+        Друзья, которые шутили, что завалят, но всё равно готовились.<br>
+        Мы все вместе.<br><br>
+        ЕГЭ — это не конец света. Это проверка.<br>
+        Проверка нас, но мы уже готовы.<br>
+        И теперь оно дрожит, потому что мы идём.<br>
+        Сильные, упрямые, уставшие — но готовые.<br>
+        Мы сдадим. Мы пройдём. Мы УНИЧТОЖИМ.
+        <div class="motivation-author">by @mrknef</div>
+      </div>
+      <div class="right-block" id="rightBlock">
+        <div class="timers-list" id="desktopTimers">
+          <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="timer1"></span></div>
+          <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="timer4"></span></div>
+          <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="timer2"></span></div>
+          <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="timer3"></span></div>
+        </div>
+        <div class="footer-text-art">УДАЧИ</div>
+      </div>
+      <!-- Таймеры для мобильных под мотивацией -->
+      <div class="timers-list mobile" id="mobileTimers" style="display:none;">
+        <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
+        <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
+        <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="mtimer2"></span></div>
+        <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="mtimer3"></span></div>
+      </div>
+      <div class="footer-text-art mobile" style="display:none;">УДАЧИ</div>
+    </section>
   </div>
   <script>
     // Таймеры
@@ -312,37 +381,29 @@
       updateCountdowns('m');
     }, 1000);
 
-    // --- Перелистывание hero-секции ---
-    const heroSection = document.getElementById('heroSection');
-    const mainBlackBlock = document.getElementById('mainBlackBlock');
-    let ticking = false;
-    function handleScroll() {
-      const scrollY = window.scrollY;
-      const heroHeight = heroSection.offsetHeight;
-      if (scrollY > heroHeight * 0.5) {
-        heroSection.classList.add('hide');
-      } else {
-        heroSection.classList.remove('hide');
-      }
-      // Адаптивный рендер таймеров
+    // Таймеры адаптивно + переключение "УДАЧИ"
+    function handleResize() {
       const isMobile = window.matchMedia('(max-width: 900px)').matches;
       const rightBlock = document.getElementById('rightBlock');
       const mobileTimers = document.getElementById('mobileTimers');
+      const footerMobile = document.querySelector('.footer-text-art.mobile');
       if (!isMobile) {
         rightBlock.style.display = 'flex';
         mobileTimers.style.display = 'none';
+        if (footerMobile) footerMobile.style.display = 'none';
       } else {
         rightBlock.style.display = 'none';
         mobileTimers.style.display = 'flex';
+        if (footerMobile) footerMobile.style.display = 'flex';
         let mot = document.querySelector('.motivation-block');
         if (mot && mobileTimers) {
           mobileTimers.style.width = getComputedStyle(mot).width;
+          if (footerMobile) footerMobile.style.width = getComputedStyle(mot).width;
         }
       }
     }
-    window.addEventListener('scroll', handleScroll, {passive:true});
-    window.addEventListener('resize', handleScroll);
-    window.addEventListener('DOMContentLoaded', handleScroll);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('DOMContentLoaded', handleResize);
   </script>
 </body>
 </html>
