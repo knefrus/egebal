@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>УНИЧТОЖЬ ЕГЭ</title>
+  <meta name="color-scheme" content="light">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     html, body {
@@ -15,7 +18,6 @@
       font-family: 'Montserrat', Arial, sans-serif;
       overflow-x: hidden;
       scroll-behavior: smooth;
-      transition: background 0.5s;
     }
     body {
       min-height: 100vh;
@@ -27,29 +29,24 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      background: #fff;
       z-index: 1;
       overflow-x: hidden;
-      background: transparent;
     }
     .destroy-block {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.1em;
       margin-bottom: 55px;
       margin-top: 0;
       user-select: none;
       pointer-events: none;
-      transition:
-        color 0.6s cubic-bezier(.4,0,.2,1),
-        flex-direction 0.7s cubic-bezier(.4,0,.2,1),
-        gap 0.7s cubic-bezier(.4,0,.2,1),
-        justify-content 0.7s cubic-bezier(.4,0,.2,1),
-        transform 0.7s cubic-bezier(.4,0,.2,1);
+      transition: all 0.6s ease;
+      gap: 0.1em;
     }
     .destroy-word {
-      opacity: 1;
+      opacity: 0;
       font-family: 'Montserrat', Arial, sans-serif;
       color: #111;
       font-weight: 700;
@@ -57,17 +54,16 @@
       line-height: 1.1;
       white-space: nowrap;
       margin: 0;
-      transition:
-        color 0.7s cubic-bezier(.4,0,.2,1),
-        font-size 0.7s cubic-bezier(.4,0,.2,1),
-        margin 0.7s cubic-bezier(.4,0,.2,1);
       text-align: center;
+      transition: all 0.6s ease;
     }
     .destroy-word.top {
-      font-size: clamp(2.2rem, 8vw, 5.5rem);
+      font-size: clamp(2.4rem, 8vw, 5.8rem);
+      animation: fadeInTop 1s 0.1s ease-out forwards;
     }
     .destroy-word.bottom {
-      font-size: clamp(3rem, 11vw, 8rem);
+      font-size: clamp(3rem, 10vw, 7.2rem);
+      animation: fadeInBottom 1s 0.6s ease-out forwards;
     }
     .destroy-block.oneline {
       flex-direction: row;
@@ -78,12 +74,21 @@
     .destroy-block.oneline .destroy-word {
       color: #fff;
       text-shadow: 0 2px 18px #222;
+      margin: 0 0.03em;
     }
     .destroy-block.oneline .top {
-      font-size: clamp(2.1rem, 6vw, 4.5rem);
+      font-size: clamp(2.1rem, 6vw, 4.2rem);
     }
     .destroy-block.oneline .bottom {
-      font-size: clamp(2.5rem, 7vw, 5.8rem);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+    }
+    @keyframes fadeInTop {
+      from { opacity: 0; transform: translateY(40px) scale(0.98);}
+      to   { opacity: 1; transform: translateY(0) scale(1);}
+    }
+    @keyframes fadeInBottom {
+      from { opacity: 0; transform: translateY(-40px) scale(0.98);}
+      to   { opacity: 1; transform: translateY(0) scale(1);}
     }
     .arrow-container {
       position: absolute;
@@ -114,54 +119,48 @@
       0%, 100% { transform: translateY(0);}
       50% { transform: translateY(7px);}
     }
-    .timers-section-outer {
+    .timers-section-wrap {
+      position: fixed;
+      left: 0;
+      bottom: 0;
       width: 100vw;
-      min-height: 100vh;
-      margin: 0;
-      background: #111;
-      transition: background 0.5s;
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
+      will-change: transform;
+      z-index: 10;
+      pointer-events: none;
     }
     .timers-section {
-      width: 100vw;
-      max-width: 560px;
+      background: #111;
+      color: #fff;
       border-radius: 32px 32px 0 0;
       padding: 48px 18px 32px 18px;
       box-shadow: 0 2px 32px rgba(0,0,0,0.16);
-      margin: 0 auto;
-      text-align: center;
-      font-family: 'Montserrat', Arial, sans-serif;
+      min-height: 390px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      background: transparent;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
     }
     .timers-section .datetime {
       font-size: 1.16em;
       margin-bottom: 18px;
       opacity: 0.84;
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-      letter-spacing: 0.03em;
+      font-family: 'Fira Mono', 'Consolas', monospace;
     }
     .timers-section .timer {
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-family: 'Fira Mono', 'Consolas', monospace;
       font-size: 2.1em;
       margin: 28px 0 8px 0;
       letter-spacing: 0.05em;
-      background: none;
-      color: #fff;
       font-weight: 600;
     }
     .timers-section .exam-date {
       font-size: 0.98em;
       color: #dfdfdf;
       margin-bottom: 10px;
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-family: 'Fira Mono', monospace;
     }
     .timers-section .footer-text {
       margin-top: 34px;
@@ -169,10 +168,20 @@
       font-weight: bold;
       color: #ffa726;
       letter-spacing: 0.04em;
-      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .white-top {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      width: 100vw;
+      height: 120px;
+      background: #fff;
+      pointer-events: none;
+      user-select: none;
+      box-shadow: 0 24px 50px 0 #fff, 0 1px 0 0 #fff;
     }
     @media (max-width: 600px) {
-      .timers-section, .timers-section-outer {
+      .timers-section, .timers-section-wrap {
         border-radius: 18px 18px 0 0;
         padding: 28px 7px 22px 7px;
       }
@@ -181,24 +190,13 @@
       .destroy-word.bottom {font-size: 2.7em;}
       .destroy-block.oneline .top {font-size: 1.2em;}
       .destroy-block.oneline .bottom {font-size: 1.5em;}
-    }
-    /* Для перекрытия надписи таймерами */
-    .sticky-hero {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: #fff;
-      transition: background 0.3s;
-    }
-    .fade {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s;
+      .white-top {height: 82px;}
     }
   </style>
 </head>
 <body>
-  <div class="hero sticky-hero" id="hero">
+  <div class="white-top"></div>
+  <section class="hero" id="hero">
     <div class="destroy-block" id="destroyBlock">
       <span class="destroy-word top">УНИЧТОЖЬ</span>
       <span class="destroy-word bottom">ЕГЭ</span>
@@ -208,8 +206,8 @@
       <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
       <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
     </div>
-  </div>
-  <div class="timers-section-outer" id="timersOuter">
+  </section>
+  <section class="timers-section-wrap" id="timersWrap">
     <div class="timers-section">
       <div class="datetime" id="currentDateTime"></div>
       <div class="timer" id="timer1"></div>
@@ -220,14 +218,18 @@
       <div class="exam-date">Информатика — 10 июня 2025, 10:00</div>
       <div class="footer-text">Удачи</div>
     </div>
-  </div>
+  </section>
+
   <script>
-    // Таймеры и дата
     function updateCurrentDateTime() {
       const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      const options = {
+        weekday: 'long', year: 'numeric', month: 'long',
+        day: 'numeric', hour: '2-digit', minute: '2-digit'
+      };
       document.getElementById('currentDateTime').textContent = now.toLocaleDateString('ru-RU', options);
     }
+
     function updateCountdowns() {
       const timers = [
         { id: 'timer1', label: 'До ЕГЭ по математике:', date: new Date('2025-05-27T10:00:00') },
@@ -237,16 +239,18 @@
       const now = new Date();
       timers.forEach(timer => {
         const diff = timer.date - now;
+        const el = document.getElementById(timer.id);
         if (diff > 0) {
           const hours = Math.floor(diff / (1000 * 60 * 60));
           const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          document.getElementById(timer.id).textContent = `${timer.label} ${hours}ч ${minutes}м ${seconds}с`;
+          el.textContent = `${timer.label} ${hours}ч ${minutes}м ${seconds}с`;
         } else {
-          document.getElementById(timer.id).textContent = `${timer.label} уже начался`;
+          el.textContent = `${timer.label} уже начался`;
         }
       });
     }
+
     updateCurrentDateTime();
     updateCountdowns();
     setInterval(() => {
@@ -254,55 +258,44 @@
       updateCountdowns();
     }, 1000);
 
-    // Скроллинг-анимация
     const destroyBlock = document.getElementById('destroyBlock');
-    const hero = document.getElementById('hero');
-    const timersOuter = document.getElementById('timersOuter');
+    const timersWrap = document.getElementById('timersWrap');
     let ticking = false;
 
-    function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
-
     function onScroll() {
+      requestTick();
+    }
+
+    function requestTick() {
       if (!ticking) {
-        requestAnimationFrame(handleScroll);
+        requestAnimationFrame(updateScrollEffects);
         ticking = true;
       }
     }
 
-    function handleScroll() {
+    function updateScrollEffects() {
       const scrollY = window.scrollY;
       const windowH = window.innerHeight;
-      const heroRect = hero.getBoundingClientRect();
-      // Надпись превращается в строчку ~середина hero
-      const onelineStart = windowH * 0.20;
-      const onelineEnd = windowH * 0.60;
-      const onelineProgress = clamp((scrollY - onelineStart) / (onelineEnd - onelineStart), 0, 1);
-      if (onelineProgress > 0.01) {
+      const start = windowH * 0.3;
+      const end = windowH * 0.9;
+      const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+      const translateY = windowH - windowH * progress;
+
+      timersWrap.style.transform = `translateY(${-translateY}px)`;
+
+      if (progress > 0.3) {
         destroyBlock.classList.add('oneline');
-        destroyBlock.style.opacity = String(1 - 0.3 * onelineProgress);
       } else {
         destroyBlock.classList.remove('oneline');
-        destroyBlock.style.opacity = "1";
       }
-      // Таймеры плавно перекрывают hero, фон становится чернее
-      const timersStart = windowH * 0.4;
-      const timersEnd = windowH * 0.98;
-      const timersProgress = clamp((scrollY - timersStart) / (timersEnd - timersStart), 0, 1);
-      timersOuter.style.background = `rgba(17,17,17,${timersProgress})`;
 
-      // Когда timers полностью на экране — fade hero
-      if (timersProgress >= 1) {
-        hero.classList.add('fade');
-      } else {
-        hero.classList.remove('fade');
-      }
       ticking = false;
     }
 
-    window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', handleScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => setTimeout(updateScrollEffects, 10));
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(handleScroll, 100);
+      setTimeout(updateScrollEffects, 100);
     });
   </script>
 </body>
