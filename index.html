@@ -15,21 +15,28 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
     }
-    body { min-height: 200vh; }
 
+    .hero-section {
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
     .destroy-block {
-      position: fixed;
-      left: 0; width: 100vw;
-      z-index: 20; top: 0;
+      width: 100vw;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.1em;
       user-select: none;
       pointer-events: none;
+      margin-top: 0;
+      margin-bottom: 42px;
       background: transparent;
-      padding-top: 2.5vh;
-      padding-bottom: 1.5vh;
       transition:
         background 0.7s,
         color 0.7s, 
@@ -47,28 +54,45 @@
       text-align: center;
       font-size: clamp(2.5rem, 10vw, 6rem);
       transition: color 0.7s, font-size 0.7s, margin 0.7s;
+      text-shadow: 0 0 8px #fff0, 0 2px 18px #fff0;
+    }
+    .destroy-block.oneline .destroy-word {
+      color: #fff;
+      text-shadow: 0 2px 18px #222, 0 0 8px #111;
     }
     .destroy-block.oneline {
       flex-direction: row;
       gap: 0.25em;
       background: #111;
-    }
-    .destroy-block.oneline .destroy-word {
-      color: #fff;
-      text-shadow: 0 2px 18px #222;
+      box-shadow: 0 2px 14px #0008;
     }
     @media (max-width: 700px) {
+      .destroy-block {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        margin-bottom: 12px;
+        background: #fff;
+        padding-top: 7vw;
+        padding-bottom: 2vw;
+        opacity: 1;
+        transition: opacity 0.5s, background 0.7s;
+      }
       .destroy-block.hide-mobile {
         opacity: 0;
         pointer-events: none;
+        transition: opacity 0.5s;
+      }
+      .destroy-block.oneline {
+        background: #111;
       }
     }
 
     .arrow-container {
-      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 5px;
-      pointer-events: none; user-select: none; z-index: 3;
+      pointer-events: none; user-select: none;
       opacity: 1; transition: opacity 0.3s;
+      margin-bottom: 24px;
     }
     .arrow-container.hide { opacity: 0; }
     .chevron {
@@ -83,34 +107,38 @@
       50% { transform: translateY(7px);}
     }
 
-    .page-content {
+    .main-black-block {
+      background: #111;
+      min-width: 100vw;
+      box-sizing: border-box;
       display: flex;
       flex-direction: row;
-      width: 100vw;
-      max-width: 1400px;
-      margin: 0 auto;
+      justify-content: center;
       align-items: flex-start;
       gap: 3vw;
-      padding-top: 12vh;
+      padding-top: 8vh;
       padding-bottom: 4vh;
-      box-sizing: border-box;
+      min-height: 100vh;
+      width: 100vw;
     }
     .motivation-block {
       flex: 0 1 48vw;
       max-width: 650px;
-      background: transparent;
+      background: #191919;
       border: 1.5px solid #fff;
       border-radius: 13px;
       padding: 32px 28px 48px 24px;
       color: #fff;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-      font-size: 1em;
+      font-size: 1.08em;
       letter-spacing: 0.01em;
       line-height: 1.7;
       box-sizing: border-box;
-      opacity: 0.92;
+      opacity: 0.97;
       min-width: 260px;
       position: relative;
+      box-shadow: 0 4px 32px #000c;
+      margin-bottom: 32px;
     }
     .motivation-author {
       position: absolute; right: 13px; bottom: 8px;
@@ -122,6 +150,7 @@
       flex: 1 1 0; display: flex; flex-direction: column;
       align-items: flex-end; justify-content: center;
       min-width: 200px; max-width: 520px; gap: 2.5vh;
+      margin-top: 0;
     }
     .timers-list {
       width: 100%; display: flex; flex-direction: column;
@@ -131,16 +160,19 @@
       display: flex; flex-direction: row; align-items: center; justify-content: flex-end;
       gap: 1.5em; width: 100%;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-      font-size: 1.15em; color: #fff; font-weight: 600; letter-spacing: 0.04em;
+      font-size: 1.21em; color: #fff; font-weight: 700; letter-spacing: 0.04em;
+      text-shadow: 0 0 8px #111;
     }
     .timer-row .exam-name {
-      min-width: 120px; text-align: right; font-size: 1em; color: #dfdfdf;
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace; font-weight: 400; margin-right: 0.5em;
+      min-width: 120px; text-align: right; font-size: 1em; color: #ffa726;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace; font-weight: 700; margin-right: 0.5em;
+      text-shadow: 0 0 3px #000, 0 1px 2px #111;
     }
     .timer-row .timer {
-      font-size: 1.17em; color: #fff; font-weight: 700;
+      font-size: 1.21em; color: #fff; font-weight: 700;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
       background: none; margin-left: 0.2em; text-align: left; min-width: 140px;
+      text-shadow: 0 0 4px #000, 0 2px 8px #111c;
     }
     .footer-text-art {
       display: flex; flex-direction: row; align-items: flex-end; justify-content: flex-end;
@@ -148,27 +180,29 @@
       font-family: 'Montserrat', Arial, sans-serif; font-weight: 900;
       letter-spacing: 0.05em; font-size: 4.4em; color: #ffa726;
       line-height: 0.88; text-align: right; user-select: none;
+      text-shadow: 0 2px 18px #000, 0 0 6px #111;
     }
 
     /* --- Мобильная адаптация --- */
-    @media (max-width: 700px) {
-      .page-content {
+    @media (max-width: 900px) {
+      .main-black-block {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
         gap: 0;
         width: 100vw;
         max-width: none;
-        padding-top: 8vh;
-        padding-bottom: 0;
+        min-height: unset;
+        padding-top: 6vh;
+        padding-bottom: 2vh;
       }
       .motivation-block {
         max-width: 96vw;
         width: 96vw;
         border-radius: 0 0 13px 13px;
         padding: 18px 3vw 34px 3vw;
-        font-size: 0.97em;
+        font-size: 1.03em;
         min-width: 0;
-        margin: 0 auto;
+        margin: 0 auto 24px auto;
       }
       .motivation-author { right: 3vw; }
       .right-block { display: none !important; }
@@ -177,30 +211,31 @@
         align-items: center;
         justify-content: center;
         width: 96vw;
-        margin: 4vh auto 1vh auto;
-        background: none;
-        gap: 1.4em;
+        margin: 0 auto 2vh auto;
+        background: #191919;
+        border: 1.5px solid #fff;
         border-radius: 13px;
-        /* box-shadow: 0 2px 10px rgba(0,0,0,0.07); */
+        box-shadow: 0 4px 32px #000c;
+        padding: 16px 6vw 18px 6vw;
+        gap: 1.8em;
       }
       .timer-row { width: 90vw; justify-content: center; }
-      .timer-row .exam-name { min-width: 90px; font-size: 0.99em;}
-      .timer-row .timer { font-size: 1em; min-width: 90px;}
+      .timer-row .exam-name { min-width: 90px; font-size: 1.05em;}
+      .timer-row .timer { font-size: 1.06em; min-width: 90px;}
       .footer-text-art { font-size: 2.1em; align-items: center;}
     }
     @media (max-width: 600px) {
       .motivation-block {
-        padding: 12px 7px 32px 7px;
-        font-size: 0.86em;
+        padding: 12px 4vw 29px 4vw;
+        font-size: 0.93em;
       }
-      .footer-text-art { font-size: 1.25em; }
-      .timers-list.mobile { width: 98vw;}
+      .timers-list.mobile { width: 99vw; padding: 14px 2vw 14px 2vw;}
       .timer-row { width: 98vw;}
     }
   </style>
 </head>
 <body>
-  <div class="hero" id="hero">
+  <div class="hero-section" id="hero">
     <div class="destroy-block" id="destroyBlock">
       <span class="destroy-word">УНИЧТОЖЬ</span>
       <span class="destroy-word">ЕГЭ</span>
@@ -211,7 +246,7 @@
       <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
     </div>
   </div>
-  <div class="page-content">
+  <div class="main-black-block">
     <div class="motivation-block">
       Слушай.<br>
       Это не просто экзамен. Это — то, к чему мы шли.<br>
@@ -241,13 +276,13 @@
       </div>
       <div class="footer-text-art">УДАЧИ</div>
     </div>
-  </div>
-  <!-- Таймеры для мобильных под мотивацией -->
-  <div class="timers-list mobile" id="mobileTimers" style="display:none;">
-    <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
-    <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
-    <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="mtimer2"></span></div>
-    <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="mtimer3"></span></div>
+    <!-- Таймеры для мобильных под мотивацией -->
+    <div class="timers-list mobile" id="mobileTimers" style="display:none;">
+      <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
+      <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
+      <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="mtimer2"></span></div>
+      <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="mtimer3"></span></div>
+    </div>
   </div>
   <script>
     // Таймеры
@@ -286,13 +321,12 @@
     const rightBlock = document.getElementById('rightBlock');
     const mobileTimers = document.getElementById('mobileTimers');
     const arrowContainer = document.getElementById('arrowContainer');
-    let ticking = false;
     function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
     function handleScroll() {
       const scrollY = window.scrollY;
       const windowH = window.innerHeight;
-      const isMobile = window.matchMedia('(max-width: 700px)').matches;
-      let progress = clamp(scrollY / (windowH * (isMobile ? 0.25 : 0.8)), 0, 1);
+      const isMobile = window.matchMedia('(max-width: 900px)').matches;
+      let progress = clamp(scrollY / (windowH * (isMobile ? 0.23 : 0.8)), 0, 1);
 
       if (!isMobile) {
         destroyBlock.style.opacity = "1";
@@ -314,27 +348,13 @@
           mobileTimers.style.width = getComputedStyle(mot).width;
         }
       }
-
       // Стрелка исчезает при скролле
       if (progress > 0.08) arrowContainer.classList.add('hide');
       else arrowContainer.classList.remove('hide');
     }
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(handleScroll);
-        ticking = true;
-      }
-    }
-    window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', function(){
-      handleScroll();
-      ticking = false;
-    });
-    window.addEventListener('DOMContentLoaded', function(){
-      handleScroll();
-      ticking = false;
-    });
-    window.addEventListener('scroll', function(){ ticking = false; });
+    window.addEventListener('scroll', handleScroll, {passive:true});
+    window.addEventListener('resize', handleScroll);
+    window.addEventListener('DOMContentLoaded', handleScroll);
   </script>
 </body>
 </html>
