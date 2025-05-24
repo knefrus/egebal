@@ -6,136 +6,401 @@
   <title>УНИЧТОЖЬ ЕГЭ</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; background: #fff; color: #111; font-family: 'Montserrat', Arial, sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
-    body { height: 100vh; width: 100vw; overflow-y: auto; }
-    .wrap { scroll-snap-type: y mandatory; height: 100vh; overflow-y: scroll; }
-    .top, .bottom { min-height: 100vh; width: 100vw; scroll-snap-align: start; }
-    .top { display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff; position: relative; z-index: 2; }
-    .title-box { width: 100vw; display: flex; flex-direction: column; align-items: center; pointer-events: none; margin: 0 0 42px; background: transparent; padding: 7vw 0 1vw; }
-    .word { color: #111; font-family: 'Montserrat', Arial, sans-serif; font-weight: 700; letter-spacing: 0.06em; white-space: nowrap; margin: 0; text-align: center; font-size: clamp(2.5rem, 10vw, 6rem); }
-    .scroll-down { display: flex; flex-direction: column; align-items: center; gap: 5px; pointer-events: none; opacity: 1; transition: opacity 0.3s; margin-bottom: 24px; }
-    .icon { width: 38px; height: 19px; stroke: #111; stroke-width: 4px; fill: none; stroke-linecap: round; stroke-linejoin: round; animation: move 1.5s infinite; }
-    .icon:nth-child(2) { animation-delay: 0.25s; }
-    .icon:nth-child(3) { animation-delay: 0.5s; }
-    @keyframes move { 0%, 100% { transform: translateY(0);} 50% { transform: translateY(7px);} }
-    .bottom { background: #111; box-sizing: border-box; display: flex; flex-direction: row; justify-content: center; align-items: flex-start; gap: 3vw; padding: 8vh 0 4vh; position: relative; z-index: 1; border-top-left-radius: 36px; border-top-right-radius: 36px; transition: border-radius 0.3s; }
-    .msg { flex: 0 1 48vw; max-width: 650px; background: #191919; border: 1.5px solid #fff; border-radius: 13px; padding: 32px 28px 48px 24px; color: #fff; font-family: 'Fira Mono', monospace; font-size: 1.08em; letter-spacing: 0.01em; line-height: 1.7; box-sizing: border-box; opacity: 0.97; position: relative; box-shadow: 0 4px 32px #000c; margin-bottom: 32px; }
-    .sig { position: absolute; right: 13px; bottom: 8px; font-family: 'Fira Mono', monospace; font-size: 0.85em; color: #fff; opacity: 0.55; pointer-events: none; letter-spacing: 0.03em; }
-    .panel { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-width: 260px; max-width: 520px; gap: 2.5vh; position: relative; }
-    .clocks { width: 100%; display: flex; flex-direction: column; gap: 1.8em; margin: 2vh 0; z-index: 2; }
-    .row { display: flex; align-items: center; width: 100%; }
-    .row .label { flex: 1; text-align: right; font-family: 'Fira Mono', monospace; font-size: 1.13em; font-weight: 700; color: #ffa726; padding-right: 1.5em; min-width: 120px; max-width: 200px; text-shadow: 0 0 3px #000, 0 1px 2px #111; }
-    .row .time { flex: 0 0 140px; text-align: left; font-size: 1.4em; color: #fff; font-family: 'Fira Mono', monospace; font-weight: 700; min-width: 140px; max-width: 250px; text-shadow: 0 0 4px #000, 0 2px 8px #111c; }
-    .tagline { width: 100%; font-family: 'Montserrat', Arial, sans-serif; font-weight: 900; letter-spacing: 0.05em; font-size: 6em; color: #ffa726; line-height: 0.88; user-select: none; text-shadow: 0 2px 18px #000, 0 0 6px #111; display: flex; justify-content: center; text-align: center; margin-top: 8vh; pointer-events: none; }
-    @media (max-width: 1200px) { .tagline { font-size: 4.2em; } }
-    @media (max-width: 1000px) { .tagline { font-size: 3em; } }
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%;
+      min-height: 100vh;
+      background: #fff;
+      color: #111;
+      font-family: 'Montserrat', Arial, sans-serif;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    body {
+      height: 100vh;
+      min-height: 100vh;
+      width: 100vw;
+      overflow-y: auto;
+    }
+
+    .snap-container {
+      scroll-snap-type: y mandatory;
+      height: 100vh;
+      overflow-y: scroll;
+    }
+    .hero-section, .main-black-block {
+      min-height: 100vh;
+      width: 100vw;
+      scroll-snap-align: start;
+    }
+
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      position: relative;
+      z-index: 2;
+    }
+    .destroy-block {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+      pointer-events: none;
+      margin-top: 0;
+      margin-bottom: 42px;
+      background: transparent;
+      padding-top: 7vw;
+      padding-bottom: 1vw;
+    }
+    .destroy-word {
+      color: #111 !important;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      margin: 0;
+      text-align: center;
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      text-shadow: none !important;
+    }
+    .arrow-container {
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      pointer-events: none; user-select: none;
+      opacity: 1; transition: opacity 0.3s;
+      margin-bottom: 24px;
+    }
+    .chevron {
+      width: 38px; height: 19px; stroke: #111; stroke-width: 4px;
+      fill: none; stroke-linecap: round; stroke-linejoin: round;
+      animation: chevron-bounce 1.5s infinite;
+    }
+    .chevron:nth-child(2) { animation-delay: 0.25s; }
+    .chevron:nth-child(3) { animation-delay: 0.5s; }
+    @keyframes chevron-bounce {
+      0%, 100% { transform: translateY(0);}
+      50% { transform: translateY(7px);}
+    }
+
+    .main-black-block {
+      background: #111;
+      min-width: 100vw;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 3vw;
+      padding-top: 8vh;
+      padding-bottom: 4vh;
+      min-height: 100vh;
+      width: 100vw;
+      position: relative;
+      z-index: 1;
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      transition: border-radius 0.3s;
+    }
+    .motivation-block {
+      flex: 0 1 48vw;
+      max-width: 650px;
+      background: #191919;
+      border: 1.5px solid #fff;
+      border-radius: 13px;
+      padding: 32px 28px 48px 24px;
+      color: #fff;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-size: 1.08em;
+      letter-spacing: 0.01em;
+      line-height: 1.7;
+      box-sizing: border-box;
+      opacity: 0.97;
+      min-width: 260px;
+      position: relative;
+      box-shadow: 0 4px 32px #000c;
+      margin-bottom: 32px;
+    }
+    .motivation-author {
+      position: absolute; right: 13px; bottom: 8px;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-size: 0.85em; color: #fff; opacity: 0.55;
+      pointer-events: none; user-select: none; letter-spacing: 0.03em;
+    }
+    .right-block {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-width: 260px;
+      max-width: 520px;
+      gap: 2.5vh;
+      margin-top: 0;
+      position: relative;
+    }
+    .timers-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.8em;
+      margin-bottom: 2vh;
+      margin-top: 2vh;
+      z-index: 2;
+    }
+    .timer-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      gap: 0;
+    }
+    .timer-row .exam-name {
+      flex: 1 1 0;
+      text-align: right;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-size: 1.13em;
+      font-weight: 700;
+      color: #ffa726;
+      padding-right: 1.5em;
+      min-width: 120px;
+      max-width: 200px;
+      text-shadow: 0 0 3px #000, 0 1px 2px #111;
+      box-sizing: border-box;
+    }
+    .timer-row .timer {
+  flex: 0 0 140px;
+  text-align: left;
+  font-size: 1.4em;
+  color: #fff;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  font-weight: 700;
+  min-width: 140px;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: visible;
+  text-shadow: 0 0 4px #000, 0 2px 8px #111c;
+  box-sizing: border-box;
+}
+    .footer-text-art {
+      width: 100%;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      font-size: 6em;
+      color: #ffa726;
+      line-height: 0.88;
+      user-select: none;
+      text-shadow: 0 2px 18px #000, 0 0 6px #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-top: 8vh;
+      margin-bottom: 0;
+      position: static;
+      left: auto;
+      right: auto;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (max-width: 1200px) {
+      .footer-text-art { font-size: 4.2em; }
+    }
+    @media (max-width: 1000px) {
+      .footer-text-art { font-size: 3em; }
+    }
     @media (max-width: 900px) {
-      .bottom { flex-direction: column; align-items: center; gap: 0; padding: 6vh 0 2vh; border-top-left-radius: 28px; border-top-right-radius: 28px; }
-      .msg { max-width: 96vw; border-radius: 0 0 13px 13px; padding: 18px 3vw 34px 3vw; font-size: 1.03em; margin: 0 auto 24px; }
-      .sig { right: 3vw; }
-      .panel { display: none !important; }
-      .clocks.mob { display: flex !important; align-items: stretch; justify-content: center; width: 96vw; margin: 0 auto 2vh; background: #191919; border: 1.5px solid #fff; border-radius: 13px; box-shadow: 0 4px 32px #000c; padding: 16px 6vw 18px 6vw; gap: 1.8em; }
-      .row .label { font-size: 1.08em; }
-      .row .time { font-size: 1.08em; }
-      .tagline { margin-top: 2vh; font-size: 2.1em; }
+      .main-black-block {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        width: 100vw;
+        max-width: none;
+        min-height: unset;
+        padding-top: 6vh;
+        padding-bottom: 2vh;
+        border-top-left-radius: 28px;
+        border-top-right-radius: 28px;
+      }
+      .motivation-block {
+        max-width: 96vw;
+        width: 96vw;
+        border-radius: 0 0 13px 13px;
+        padding: 18px 3vw 34px 3vw;
+        font-size: 1.03em;
+        min-width: 0;
+        margin: 0 auto 24px auto;
+      }
+      .motivation-author { right: 3vw; }
+      .right-block { display: none !important; }
+      .timers-list.mobile {
+        display: flex !important;
+        align-items: stretch;
+        justify-content: center;
+        width: 96vw;
+        margin: 0 auto 2vh auto;
+        background: #191919;
+        border: 1.5px solid #fff;
+        border-radius: 13px;
+        box-shadow: 0 4px 32px #000c;
+        padding: 16px 6vw 18px 6vw;
+        gap: 1.8em;
+      }
+      .timer-row { width: 100%; }
+      .timer-row .exam-name {
+        text-align: right;
+        padding-right: 1.5em;
+        min-width: 90px;
+        max-width: 200px;
+        font-size: 1.08em;
+      }
+      .timer-row .timer {
+        text-align: left;
+        min-width: 120px;
+        max-width: 300px;
+        font-size: 1.08em;
+        white-space: nowrap;
+        overflow: visible;
+      }
+      .footer-text-art {
+        position: static !important;
+        margin-top: 2vh;
+        margin-bottom: 1vh;
+        font-size: 2.1em;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        width: 100% !important;
+        left: auto;
+        right: auto;
+        pointer-events: none;
+      }
     }
     @media (max-width: 600px) {
-      .msg { padding: 12px 4vw 29px 4vw; font-size: 0.93em; }
-      .clocks.mob { width: 99vw; padding: 14px 2vw; }
-      .row .time { min-width: 95px; }
-      .tagline { font-size: 1.25em !important; }
+      .motivation-block {
+        padding: 12px 4vw 29px 4vw;
+        font-size: 0.93em;
+      }
+      .timers-list.mobile { width: 99vw; padding: 14px 2vw 14px 2vw;}
+      .timer-row { width: 100%;}
+      .footer-text-art { font-size: 1.25em !important; }
+      .timer-row .timer { min-width: 95px; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="top">
-      <div class="title-box">
-        <span class="word">УНИЧТОЖЬ</span>
-        <span class="word">ЕГЭ</span>
+  <div class="snap-container">
+    <section class="hero-section">
+      <div class="destroy-block">
+        <span class="destroy-word">УНИЧТОЖЬ</span>
+        <span class="destroy-word">ЕГЭ</span>
       </div>
-      <div class="scroll-down">
-        <svg class="icon" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
-        <svg class="icon" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
-        <svg class="icon" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
+      <div class="arrow-container">
+        <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
+        <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
+        <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
       </div>
     </section>
-    <section class="bottom">
-      <div class="msg">
-        Слушай.<br>Это не просто экзамен. Это — то, к чему мы так долго шли.<br>Месяцы подготовки, бессонные ночи, тонны материала, переписанного, прорешанного.<br>Это были не просто дни — это было настоящее испытание, проверка.<br>И теперь — пора выходить на поле.<br><br>Ты не один.<br>С тобой — все те, кто вёл тебя к этой точке.<br>Преподы из обычных и онлайн школ, которые верили в нас даже больше, чем мы сами.<br>Те, кто каждый день говорил: «Ты справишься».<br>Родители, которые поддерживали тебя.<br>Друзья, которые шутили, что завалят, но всё равно готовились.<br>Мы все вместе.<br><br>ЕГЭ — это не конец света. Это проверка.<br>Проверка нас, но мы к ней уже готовы.<br>И теперь ЕГЭ дрожЖжит, потому что мы идём.<br>Сильные, упрямые, уставшие — но готовые<br>Мы сдадим. Мы пройдём. Мы УНИЧТОЖИМ.
-        <div class="sig">by @mrknef</div>
+    <section class="main-black-block">
+      <div class="motivation-block">
+        Слушай.<br>
+        Это не просто экзамен. Это — то, к чему мы так долго шли.<br>
+        Месяцы подготовки, бессонные ночи, тонны материала, переписанного, прорешанного.<br>
+        Это были не просто дни — это было настоящее испытание, проверка.<br>
+        И теперь — пора выходить на поле.<br><br>
+        Ты не один.<br>
+        С тобой — все те, кто вёл тебя к этой точке.<br>
+        Преподы из обычных и онлайн школ, которые верили в нас даже больше, чем мы сами.<br>
+        Те, кто каждый день говорил: «Ты справишься».<br>
+        Родители, которые поддерживали тебя.<br>
+        Друзья, которые шутили, что завалят, но всё равно готовились.<br>
+        Мы все вместе.<br><br>
+        ЕГЭ — это не конец света. Это проверка.<br>
+        Проверка нас, но мы к ней уже готовы.<br>
+        И теперь ЕГЭ дрожЖжит, потому что мы идём.<br>
+        Сильные, упрямые, уставшие — но готовые<br>
+        Мы сдадим. Мы пройдём. Мы УНИЧТОЖИМ.
+        <div class="motivation-author">by @mrknef</div>
       </div>
-      <div class="panel" id="rightBlock">
-        <div class="clocks" id="desktopTimers">
-          <div class="row"><span class="label">Математика</span><span class="time" id="timer1"></span></div>
-          <div class="row"><span class="label">Физика</span><span class="time" id="timer4"></span></div>
-          <div class="row"><span class="label">Русский язык</span><span class="time" id="timer2"></span></div>
-          <div class="row"><span class="label">Информатика</span><span class="time" id="timer3"></span></div>
+      <div class="right-block" id="rightBlock">
+        <div class="timers-list" id="desktopTimers">
+          <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="timer1"></span></div>
+          <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="timer4"></span></div>
+          <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="timer2"></span></div>
+          <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="timer3"></span></div>
         </div>
-        <div class="tagline">УДАЧИ 2к25</div>
+        <div class="footer-text-art">УДАЧИ 2к25</div>
       </div>
-      <div class="clocks mob" id="mobileTimers" style="display:none;">
-        <div class="row"><span class="label">Математика</span><span class="time" id="mtimer1"></span></div>
-        <div class="row"><span class="label">Физика</span><span class="time" id="mtimer4"></span></div>
-        <div class="row"><span class="label">Русский язык</span><span class="time" id="mtimer2"></span></div>
-        <div class="row"><span class="label">Информатика</span><span class="time" id="mtimer3"></span></div>
+      <!-- Таймеры для мобильных под мотивацией -->
+      <div class="timers-list mobile" id="mobileTimers" style="display:none;">
+        <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
+        <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
+        <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="mtimer2"></span></div>
+        <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="mtimer3"></span></div>
       </div>
-      <div class="tagline mob" style="display:none;">УДАЧИ 2к25</div>
+      <div class="footer-text-art mobile" style="display:none;">УДАЧИ 2к25</div>
     </section>
   </div>
   <script>
-    function updateTimers(p='') {
-      const tList = [
-        { id: `${p}timer1`, date: new Date('2025-05-27T10:00:00') },
-        { id: `${p}timer4`, date: new Date('2025-06-02T10:00:00') },
-        { id: `${p}timer2`, date: new Date('2025-05-30T10:00:00') },
-        { id: `${p}timer3`, date: new Date('2025-06-10T10:00:00') }
+    // Таймеры
+    function updateCountdowns(prefix='') {
+      const timers = [
+        { id: `${prefix}timer1`, date: new Date('2025-05-27T10:00:00') },
+        { id: `${prefix}timer4`, date: new Date('2025-06-02T10:00:00') }, // Физика
+        { id: `${prefix}timer2`, date: new Date('2025-05-30T10:00:00') },
+        { id: `${prefix}timer3`, date: new Date('2025-06-10T10:00:00') }
       ];
       const now = new Date();
-      tList.forEach(t => {
-        const el = document.getElementById(t.id);
+      timers.forEach(timer => {
+        const el = document.getElementById(timer.id);
         if (!el) return;
-        const diff = t.date - now;
+        const diff = timer.date - now;
         if (diff > 0) {
-          const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-          const m = Math.floor((diff / (1000 * 60)) % 60);
-          const s = Math.floor((diff / 1000) % 60);
-          el.textContent = `${d}д ${h}ч ${m}м ${s}с`;
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+          el.textContent = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
         } else {
           el.textContent = `уже начался`;
         }
       });
     }
-    updateTimers('');
-    updateTimers('m');
-    setInterval(() => {
-      updateTimers('');
-      updateTimers('m');
+    updateCountdowns('');
+    updateCountdowns('m');
+    setInterval(function(){
+      updateCountdowns('');
+      updateCountdowns('m');
     }, 1000);
 
-    function adapt() {
-      const isM = window.matchMedia('(max-width: 900px)').matches;
-      const rb = document.getElementById('rightBlock');
-      const mt = document.getElementById('mobileTimers');
-      const ft = document.querySelector('.tagline.mob');
-      if (!isM) {
-        rb.style.display = 'flex';
-        mt.style.display = 'none';
-        if (ft) ft.style.display = 'none';
+    // Таймеры адаптивно + переключение "УДАЧИ"
+    function handleResize() {
+      const isMobile = window.matchMedia('(max-width: 900px)').matches;
+      const rightBlock = document.getElementById('rightBlock');
+      const mobileTimers = document.getElementById('mobileTimers');
+      const footerMobile = document.querySelector('.footer-text-art.mobile');
+      if (!isMobile) {
+        rightBlock.style.display = 'flex';
+        mobileTimers.style.display = 'none';
+        if (footerMobile) footerMobile.style.display = 'none';
       } else {
-        rb.style.display = 'none';
-        mt.style.display = 'flex';
-        if (ft) ft.style.display = 'flex';
-        let msg = document.querySelector('.msg');
-        if (msg && mt) {
-          mt.style.width = getComputedStyle(msg).width;
-          if (ft) ft.style.width = getComputedStyle(msg).width;
+        rightBlock.style.display = 'none';
+        mobileTimers.style.display = 'flex';
+        if (footerMobile) footerMobile.style.display = 'flex';
+        let mot = document.querySelector('.motivation-block');
+        if (mot && mobileTimers) {
+          mobileTimers.style.width = getComputedStyle(mot).width;
+          if (footerMobile) footerMobile.style.width = getComputedStyle(mot).width;
         }
       }
     }
-    window.addEventListener('resize', adapt);
-    window.addEventListener('DOMContentLoaded', adapt);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('DOMContentLoaded', handleResize);
   </script>
 </body>
 </html>
