@@ -7,36 +7,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     html, body {
-      height: 100%;
       margin: 0;
       padding: 0;
+      min-height: 100vh;
       background: #fff;
       color: #111;
       font-family: 'Montserrat', Arial, sans-serif;
-      overflow-x: hidden;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
-    body {
-      min-height: 200vh;
-      /* важно, чтобы хватало для прокрутки */
-    }
+    body { min-height: 200vh; }
     .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
-      z-index: 1;
-      overflow-x: hidden;
       background: #fff;
+      position: relative;
+      z-index: 2;
       transition: background 0.5s;
     }
     .destroy-block {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       gap: 0.1em;
       margin-bottom: 55px;
       margin-top: 0;
@@ -46,45 +41,62 @@
         color 0.6s cubic-bezier(.4,0,.2,1),
         flex-direction 0.7s cubic-bezier(.4,0,.2,1),
         gap 0.7s cubic-bezier(.4,0,.2,1),
-        justify-content 0.7s cubic-bezier(.4,0,.2,1),
         transform 0.7s cubic-bezier(.4,0,.2,1);
+      will-change: color, flex-direction, gap, transform;
     }
     .destroy-word {
       opacity: 1;
-      font-family: 'Montserrat', Arial, sans-serif;
       color: #111;
       font-weight: 700;
       letter-spacing: 0.06em;
-      line-height: 1.1;
       white-space: nowrap;
       margin: 0;
+      text-align: center;
       transition:
         color 0.7s cubic-bezier(.4,0,.2,1),
         font-size 0.7s cubic-bezier(.4,0,.2,1),
         margin 0.7s cubic-bezier(.4,0,.2,1);
-      text-align: center;
     }
     .destroy-word.top {
       font-size: clamp(2.2rem, 8vw, 5.5rem);
+      opacity: 1;
     }
     .destroy-word.bottom {
       font-size: clamp(3rem, 11vw, 8rem);
+      opacity: 1;
     }
     .destroy-block.oneline {
       flex-direction: row;
-      gap: 0.4em;
+      gap: 0.25em;
       justify-content: center;
-      transform: translateY(-38px) scale(0.98);
+      transform: translateY(-30px) scale(0.98);
     }
     .destroy-block.oneline .destroy-word {
       color: #fff;
       text-shadow: 0 2px 18px #222;
+      margin: 0 0.03em;
     }
     .destroy-block.oneline .top {
       font-size: clamp(2.1rem, 6vw, 4.5rem);
     }
     .destroy-block.oneline .bottom {
       font-size: clamp(2.5rem, 7vw, 5.8rem);
+    }
+    .destroy-block.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      padding-top: 2.5vh;
+      padding-bottom: 1.5vh;
+      background: #111;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      box-sizing: border-box;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      gap: 0.3em;
+      transition: background 0.5s, color 0.7s;
     }
     .arrow-container {
       position: absolute;
@@ -95,9 +107,9 @@
       flex-direction: column;
       align-items: center;
       gap: 5px;
-      z-index: 2;
       pointer-events: none;
       user-select: none;
+      z-index: 3;
     }
     .chevron {
       width: 38px;
@@ -115,87 +127,170 @@
       0%, 100% { transform: translateY(0);}
       50% { transform: translateY(7px);}
     }
+
     .timers-section-outer {
+      width: 100vw;
       min-height: 100vh;
-      width: 100vw;
       background: #111;
-      position: relative;
-      z-index: 2;
+      position: fixed;
+      left: 0;
+      top: 100vh;
+      z-index: 1;
       display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      transition: background 0.5s;
-    }
-    .timers-section {
-      width: 100vw;
-      max-width: 560px;
-      border-radius: 32px 32px 0 0;
-      padding: 48px 18px 32px 18px;
-      box-shadow: 0 2px 32px rgba(0,0,0,0.16);
-      margin: 0 auto;
-      text-align: center;
-      font-family: 'Montserrat', Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      justify-content: flex-end;
-      background: transparent;
+      justify-content: center;
+      transition: top 0.5s, background 0.5s;
+      box-sizing: border-box;
+      padding: 0;
     }
-    .timers-section .datetime {
-      font-size: 1.16em;
-      margin-bottom: 18px;
-      opacity: 0.84;
+    .inner-content {
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      max-width: 1400px;
+      align-items: center;
+      justify-content: center;
+      gap: 3vw;
+      margin: 6vh auto 0 auto;
+      padding-bottom: 2vh;
+      box-sizing: border-box;
+    }
+    .motivation-block {
+      flex: 0 1 48vw;
+      max-width: 650px;
+      background: transparent;
+      border: 1.5px solid #fff;
+      border-radius: 13px;
+      padding: 32px 28px 48px 24px;
+      color: #fff;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-size: 1em;
+      letter-spacing: 0.01em;
+      line-height: 1.7;
+      box-sizing: border-box;
+      opacity: 0.92;
+      min-width: 260px;
+      position: relative;
+    }
+    .motivation-author {
+      position: absolute;
+      right: 13px;
+      bottom: 8px;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-size: 0.85em;
+      color: #fff;
+      opacity: 0.55;
+      pointer-events: none;
+      user-select: none;
       letter-spacing: 0.03em;
     }
-    .timers-section .timer {
+    .right-block {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      min-width: 200px;
+      max-width: 520px;
+      gap: 2.5vh;
+    }
+    .timers-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1.8em;
+      margin-bottom: 2vh;
+      margin-top: 2vh;
+    }
+    .timer-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1.5em;
+      width: 100%;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-      font-size: 2.1em;
-      margin: 28px 0 8px 0;
-      letter-spacing: 0.05em;
-      background: none;
+      font-size: 1.15em;
       color: #fff;
       font-weight: 600;
-    }
-    .timers-section .exam-date {
-      font-size: 0.98em;
-      color: #dfdfdf;
-      margin-bottom: 10px;
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-    }
-    .timers-section .footer-text {
-      margin-top: 34px;
-      font-size: 2em;
-      font-weight: bold;
-      color: #ffa726;
       letter-spacing: 0.04em;
+    }
+    .timer-row .exam-name {
+      min-width: 120px;
+      text-align: right;
+      font-size: 1em;
+      color: #dfdfdf;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      font-weight: 400;
+      margin-right: 0.5em;
+    }
+    .timer-row .timer {
+      font-size: 1.17em;
+      color: #fff;
+      font-weight: 700;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+      background: none;
+      margin-left: 0.2em;
+      text-align: left;
+      min-width: 140px;
+      text-align: left;
+    }
+    .footer-text-art {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: 100%;
+      margin-top: 4vh;
+      margin-bottom: 1vh;
       font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      font-size: 4.4em;
+      color: #ffa726;
+      line-height: 0.88;
+      text-align: right;
+      user-select: none;
+    }
+    @media (max-width: 1200px) {
+      .motivation-block {max-width: 96vw; flex: 0 1 55vw;}
+      .right-block {max-width: 99vw;}
+      .inner-content {gap: 2vw;}
+    }
+    @media (max-width: 900px) {
+      .timers-section-outer {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        padding: 0 0 0 0;
+      }
+      .inner-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        margin: 2vh 0 0 0;
+      }
+      .motivation-block, .right-block {
+        max-width: 99vw;
+        width: 99vw;
+        margin: 0 auto;
+      }
+      .right-block {align-items: center;}
+      .timers-list {align-items: center;}
+      .footer-text-art {align-items: center; font-size: 2.2em;}
     }
     @media (max-width: 600px) {
-      .timers-section, .timers-section-outer {
-        border-radius: 18px 18px 0 0;
-        padding: 28px 7px 22px 7px;
+      .motivation-block {
+        padding: 12px 7px 32px 7px;
+        font-size: 0.86em;
+        margin: 2vw 0 0 0;
       }
-      .timers-section .footer-text { font-size: 1.25em; }
-      .destroy-word.top {font-size: 2.2em;}
-      .destroy-word.bottom {font-size: 2.7em;}
-      .destroy-block.oneline .top {font-size: 1.2em;}
-      .destroy-block.oneline .bottom {font-size: 1.5em;}
-    }
-    .timers-section-outer.fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      min-height: 100vh;
-      height: 100vh;
-      animation: none !important;
-    }
-    .hero.fade {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s;
+      .footer-text-art { font-size: 1.25em; }
+      .timer-row .exam-name { min-width: 70px; font-size: 0.9em;}
+      .timer-row .timer { font-size: 1em; min-width: 98px;}
+      .destroy-block.fixed {font-size: 0.87em;}
     }
   </style>
 </head>
@@ -212,94 +307,112 @@
     </div>
   </div>
   <div class="timers-section-outer" id="timersOuter">
-    <div class="timers-section">
-      <div class="datetime" id="currentDateTime"></div>
-      <div class="timer" id="timer1"></div>
-      <div class="exam-date">Математика — 27 мая 2025, 10:00</div>
-      <div class="timer" id="timer2"></div>
-      <div class="exam-date">Русский язык — 30 мая 2025, 10:00</div>
-      <div class="timer" id="timer3"></div>
-      <div class="exam-date">Информатика — 10 июня 2025, 10:00</div>
-      <div class="footer-text">Удачи</div>
+    <div class="inner-content">
+      <div class="motivation-block">
+        Слушай.<br>
+        Это не просто экзамен. Это — то, к чему мы шли.<br>
+        Месяцы подготовки, бессонные ночи, тонны материалов, переписанного, прорешанного.<br>
+        Это были не просто дни — это было настоящее испытание, проверка.<br>
+        И теперь — пора выходить на поле.<br><br>
+        Ты не один.<br>
+        С тобой — все те, кто вёл тебя к этой точке.<br>
+        Преподы из обычных и онлайн школ, которые верили в нас даже больше, чем мы сами.<br>
+        Те, кто каждый день твердил: «Ты справишься».<br>
+        Родители, которые поддерживали тебя.<br>
+        Друзья, которые шутили, что завалят, но всё равно готовились.<br>
+        Мы все вместе.<br><br>
+        ЕГЭ — это не конец света. Это проверка.<br>
+        Проверка нас, но мы уже готовы.<br>
+        И теперь оно дрожит, потому что мы идём.<br>
+        Сильные, упрямые, уставшие — но готовые.<br>
+        Мы сдадим. Мы пройдём. Мы УНИЧТОЖИМ.
+        <div class="motivation-author">by @mrknef</div>
+      </div>
+      <div class="right-block">
+        <div class="timers-list">
+          <div class="timer-row">
+            <span class="exam-name">Математика</span>
+            <span class="timer" id="timer1"></span>
+          </div>
+          <div class="timer-row">
+            <span class="exam-name">Физика</span>
+            <span class="timer" id="timer4"></span>
+          </div>
+          <div class="timer-row">
+            <span class="exam-name">Русский язык</span>
+            <span class="timer" id="timer2"></span>
+          </div>
+          <div class="timer-row">
+            <span class="exam-name">Информатика</span>
+            <span class="timer" id="timer3"></span>
+          </div>
+        </div>
+        <div class="footer-text-art">
+          УДАЧИ
+        </div>
+      </div>
     </div>
   </div>
   <script>
-    // Таймеры и дата
-    function updateCurrentDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-      document.getElementById('currentDateTime').textContent = now.toLocaleDateString('ru-RU', options);
-    }
     function updateCountdowns() {
       const timers = [
-        { id: 'timer1', label: 'До ЕГЭ по математике:', date: new Date('2025-05-27T10:00:00') },
-        { id: 'timer2', label: 'До ЕГЭ по русскому языку:', date: new Date('2025-05-30T10:00:00') },
-        { id: 'timer3', label: 'До ЕГЭ по информатике:', date: new Date('2025-06-10T10:00:00') }
+        { id: 'timer1', date: new Date('2025-05-27T10:00:00') },
+        { id: 'timer4', date: new Date('2025-06-02T10:00:00') }, // Физика
+        { id: 'timer2', date: new Date('2025-05-30T10:00:00') },
+        { id: 'timer3', date: new Date('2025-06-10T10:00:00') }
       ];
       const now = new Date();
       timers.forEach(timer => {
         const diff = timer.date - now;
+        const el = document.getElementById(timer.id);
         if (diff > 0) {
-          const hours = Math.floor(diff / (1000 * 60 * 60));
-          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          document.getElementById(timer.id).textContent = `${timer.label} ${hours}ч ${minutes}м ${seconds}с`;
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+          el.textContent = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
         } else {
-          document.getElementById(timer.id).textContent = `${timer.label} уже начался`;
+          el.textContent = `уже начался`;
         }
       });
     }
-    updateCurrentDateTime();
     updateCountdowns();
-    setInterval(() => {
-      updateCurrentDateTime();
-      updateCountdowns();
-    }, 1000);
+    setInterval(updateCountdowns, 1000);
 
-    // Скроллинг-анимация
+    // Анимация по скроллу
     const destroyBlock = document.getElementById('destroyBlock');
-    const hero = document.getElementById('hero');
     const timersOuter = document.getElementById('timersOuter');
     let ticking = false;
-
     function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
-
     function onScroll() {
       if (!ticking) {
         requestAnimationFrame(handleScroll);
         ticking = true;
       }
     }
-
     function handleScroll() {
       const scrollY = window.scrollY;
       const windowH = window.innerHeight;
-      const timersRect = timersOuter.getBoundingClientRect();
-      const timersTop = timersRect.top + scrollY;
-
-      // Надпись превращается в строчку и белеет
-      const onelineStart = windowH * 0.20;
-      const onelineEnd = windowH * 0.60;
+      const onelineStart = windowH * 0.18;
+      const onelineEnd = windowH * 0.55;
       const onelineProgress = clamp((scrollY - onelineStart) / (onelineEnd - onelineStart), 0, 1);
+      const timersStart = 0;
+      const timersEnd = windowH * 1.0;
+      const timersProgress = clamp((scrollY - timersStart) / (timersEnd - timersStart), 0, 1);
+      timersOuter.style.top = `${100 - timersProgress * 100}vh`;
+
       if (onelineProgress > 0.01) {
         destroyBlock.classList.add('oneline');
-        destroyBlock.style.opacity = String(1 - 0.3 * onelineProgress);
       } else {
         destroyBlock.classList.remove('oneline');
-        destroyBlock.style.opacity = "1";
       }
-
-      // Если таймеры достигли верха экрана — фиксировать их
-      if (scrollY + 1 >= timersTop - windowH) {
-        timersOuter.classList.add('fixed');
-        hero.classList.add('fade');
+      if (timersProgress > 0.96) {
+        destroyBlock.classList.add('fixed');
       } else {
-        timersOuter.classList.remove('fixed');
-        hero.classList.remove('fade');
+        destroyBlock.classList.remove('fixed');
       }
       ticking = false;
     }
-
     window.addEventListener('scroll', onScroll, {passive:true});
     window.addEventListener('resize', handleScroll);
     window.addEventListener('DOMContentLoaded', () => {
