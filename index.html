@@ -17,7 +17,6 @@
     }
     body { min-height: 200vh; }
 
-    /* --- Надпись уничтожь егэ --- */
     .destroy-block {
       position: fixed;
       left: 0; width: 100vw;
@@ -58,7 +57,6 @@
       color: #fff;
       text-shadow: 0 2px 18px #222;
     }
-    /* Анимация исчезновения на телефоне */
     @media (max-width: 700px) {
       .destroy-block.hide-mobile {
         opacity: 0;
@@ -66,7 +64,6 @@
       }
     }
 
-    /* --- Стрелка --- */
     .arrow-container {
       position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 5px;
@@ -86,31 +83,33 @@
       50% { transform: translateY(7px);}
     }
 
-    /* --- Таймеры и мотивация (десктоп) --- */
-    .timers-section-outer {
-      width: 100vw; min-height: 100vh;
-      background: #111;
-      position: fixed; left: 0; top: 100vh; z-index: 1;
-      display: flex; flex-direction: row; align-items: center; justify-content: center;
-      transition: top 0.5s, background 0.5s; box-sizing: border-box; padding: 0;
-    }
-    .inner-content {
-      display: flex; flex-direction: row;
-      width: 100vw; max-width: 1400px;
-      align-items: center; justify-content: center;
-      gap: 3vw; margin: 6vh auto 0 auto;
-      padding-bottom: 2vh; box-sizing: border-box;
+    .page-content {
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      max-width: 1400px;
+      margin: 0 auto;
+      align-items: flex-start;
+      gap: 3vw;
+      padding-top: 12vh;
+      padding-bottom: 4vh;
+      box-sizing: border-box;
     }
     .motivation-block {
-      flex: 0 1 48vw; max-width: 650px;
+      flex: 0 1 48vw;
+      max-width: 650px;
       background: transparent;
       border: 1.5px solid #fff;
       border-radius: 13px;
       padding: 32px 28px 48px 24px;
       color: #fff;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-      font-size: 1em; letter-spacing: 0.01em; line-height: 1.7;
-      box-sizing: border-box; opacity: 0.92; min-width: 260px;
+      font-size: 1em;
+      letter-spacing: 0.01em;
+      line-height: 1.7;
+      box-sizing: border-box;
+      opacity: 0.92;
+      min-width: 260px;
       position: relative;
     }
     .motivation-author {
@@ -153,37 +152,39 @@
 
     /* --- Мобильная адаптация --- */
     @media (max-width: 700px) {
-      .timers-section-outer {
-        flex-direction: column; align-items: stretch; justify-content: flex-start;
-        padding: 0 0 0 0;
-      }
-      .inner-content {
+      .page-content {
         flex-direction: column;
         align-items: stretch;
         gap: 0;
-        margin: 2vh 0 0 0;
-      }
-      .motivation-block, .right-block {
-        max-width: 99vw; width: 99vw; margin: 0 auto;
+        width: 100vw;
+        max-width: none;
+        padding-top: 8vh;
+        padding-bottom: 0;
       }
       .motivation-block {
+        max-width: 96vw;
+        width: 96vw;
         border-radius: 0 0 13px 13px;
-        padding: 18px 6vw 40px 6vw;
+        padding: 18px 3vw 34px 3vw;
         font-size: 0.97em;
         min-width: 0;
+        margin: 0 auto;
       }
-      .motivation-author { right: 6vw; }
+      .motivation-author { right: 3vw; }
       .right-block { display: none !important; }
       .timers-list.mobile {
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 99vw;
-        gap: 1.2em;
-        margin: 2vh auto 1vh auto;
+        width: 96vw;
+        margin: 4vh auto 1vh auto;
         background: none;
+        gap: 1.4em;
+        border-radius: 13px;
+        /* box-shadow: 0 2px 10px rgba(0,0,0,0.07); */
       }
-      .timer-row .exam-name { min-width: 90px; font-size: 0.98em;}
+      .timer-row { width: 90vw; justify-content: center; }
+      .timer-row .exam-name { min-width: 90px; font-size: 0.99em;}
       .timer-row .timer { font-size: 1em; min-width: 90px;}
       .footer-text-art { font-size: 2.1em; align-items: center;}
     }
@@ -191,9 +192,10 @@
       .motivation-block {
         padding: 12px 7px 32px 7px;
         font-size: 0.86em;
-        margin: 2vw 0 0 0;
       }
       .footer-text-art { font-size: 1.25em; }
+      .timers-list.mobile { width: 98vw;}
+      .timer-row { width: 98vw;}
     }
   </style>
 </head>
@@ -209,45 +211,43 @@
       <svg class="chevron" viewBox="0 0 38 19"><polyline points="2,2 19,17 36,2"/></svg>
     </div>
   </div>
-  <div class="timers-section-outer" id="timersOuter">
-    <div class="inner-content" id="mainContent">
-      <div class="motivation-block">
-        Слушай.<br>
-        Это не просто экзамен. Это — то, к чему мы шли.<br>
-        Месяцы подготовки, бессонные ночи, тонны материалов, переписанного, прорешанного.<br>
-        Это были не просто дни — это было настоящее испытание, проверка.<br>
-        И теперь — пора выходить на поле.<br><br>
-        Ты не один.<br>
-        С тобой — все те, кто вёл тебя к этой точке.<br>
-        Преподы из обычных и онлайн школ, которые верили в нас даже больше, чем мы сами.<br>
-        Те, кто каждый день твердил: «Ты справишься».<br>
-        Родители, которые поддерживали тебя.<br>
-        Друзья, которые шутили, что завалят, но всё равно готовились.<br>
-        Мы все вместе.<br><br>
-        ЕГЭ — это не конец света. Это проверка.<br>
-        Проверка нас, но мы уже готовы.<br>
-        И теперь оно дрожит, потому что мы идём.<br>
-        Сильные, упрямые, уставшие — но готовые.<br>
-        Мы сдадим. Мы пройдём. Мы УНИЧТОЖИМ.
-        <div class="motivation-author">by @mrknef</div>
-      </div>
-      <div class="right-block" id="rightBlock">
-        <div class="timers-list" id="desktopTimers">
-          <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="timer1"></span></div>
-          <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="timer4"></span></div>
-          <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="timer2"></span></div>
-          <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="timer3"></span></div>
-        </div>
-        <div class="footer-text-art">УДАЧИ</div>
-      </div>
-      <!-- Таймеры для мобильных -->
-      <div class="timers-list mobile" id="mobileTimers" style="display:none;">
-        <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
-        <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
-        <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="mtimer2"></span></div>
-        <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="mtimer3"></span></div>
-      </div>
+  <div class="page-content">
+    <div class="motivation-block">
+      Слушай.<br>
+      Это не просто экзамен. Это — то, к чему мы шли.<br>
+      Месяцы подготовки, бессонные ночи, тонны материалов, переписанного, прорешанного.<br>
+      Это были не просто дни — это было настоящее испытание, проверка.<br>
+      И теперь — пора выходить на поле.<br><br>
+      Ты не один.<br>
+      С тобой — все те, кто вёл тебя к этой точке.<br>
+      Преподы из обычных и онлайн школ, которые верили в нас даже больше, чем мы сами.<br>
+      Те, кто каждый день твердил: «Ты справишься».<br>
+      Родители, которые поддерживали тебя.<br>
+      Друзья, которые шутили, что завалят, но всё равно готовились.<br>
+      Мы все вместе.<br><br>
+      ЕГЭ — это не конец света. Это проверка.<br>
+      Проверка нас, но мы уже готовы.<br>
+      И теперь оно дрожит, потому что мы идём.<br>
+      Сильные, упрямые, уставшие — но готовые.<br>
+      Мы сдадим. Мы пройдём. Мы УНИЧТОЖИМ.
+      <div class="motivation-author">by @mrknef</div>
     </div>
+    <div class="right-block" id="rightBlock">
+      <div class="timers-list" id="desktopTimers">
+        <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="timer1"></span></div>
+        <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="timer4"></span></div>
+        <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="timer2"></span></div>
+        <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="timer3"></span></div>
+      </div>
+      <div class="footer-text-art">УДАЧИ</div>
+    </div>
+  </div>
+  <!-- Таймеры для мобильных под мотивацией -->
+  <div class="timers-list mobile" id="mobileTimers" style="display:none;">
+    <div class="timer-row"><span class="exam-name">Математика</span><span class="timer" id="mtimer1"></span></div>
+    <div class="timer-row"><span class="exam-name">Физика</span><span class="timer" id="mtimer4"></span></div>
+    <div class="timer-row"><span class="exam-name">Русский язык</span><span class="timer" id="mtimer2"></span></div>
+    <div class="timer-row"><span class="exam-name">Информатика</span><span class="timer" id="mtimer3"></span></div>
   </div>
   <script>
     // Таймеры
@@ -281,11 +281,9 @@
       updateCountdowns('m');
     }, 1000);
 
-    // --- Адаптивный рендер таймеров и анимация надписи ---
+    // Адаптивный рендер таймеров и анимация надписи
     const destroyBlock = document.getElementById('destroyBlock');
-    const timersOuter = document.getElementById('timersOuter');
     const rightBlock = document.getElementById('rightBlock');
-    const desktopTimers = document.getElementById('desktopTimers');
     const mobileTimers = document.getElementById('mobileTimers');
     const arrowContainer = document.getElementById('arrowContainer');
     let ticking = false;
@@ -294,37 +292,32 @@
       const scrollY = window.scrollY;
       const windowH = window.innerHeight;
       const isMobile = window.matchMedia('(max-width: 700px)').matches;
-
-      // Надпись уничтожь егэ: на мобиле исчезает при скролле
       let progress = clamp(scrollY / (windowH * (isMobile ? 0.25 : 0.8)), 0, 1);
+
       if (!isMobile) {
         destroyBlock.style.opacity = "1";
         if (progress > 0.12) destroyBlock.classList.add('oneline');
         else destroyBlock.classList.remove('oneline');
+        rightBlock.style.display = 'flex';
+        mobileTimers.style.display = 'none';
       } else {
         destroyBlock.style.opacity = 1 - progress;
         if (progress > 0.12) destroyBlock.classList.add('oneline');
         else destroyBlock.classList.remove('oneline');
         if (progress > 0.98) destroyBlock.classList.add('hide-mobile');
         else destroyBlock.classList.remove('hide-mobile');
+        rightBlock.style.display = 'none';
+        mobileTimers.style.display = 'flex';
+        // выравниваем блок таймеров по ширине мотивации
+        let mot = document.querySelector('.motivation-block');
+        if (mot && mobileTimers) {
+          mobileTimers.style.width = getComputedStyle(mot).width;
+        }
       }
 
       // Стрелка исчезает при скролле
       if (progress > 0.08) arrowContainer.classList.add('hide');
       else arrowContainer.classList.remove('hide');
-
-      // Таймерный блок выезжает вверх по скроллу
-      const timersProgress = clamp(scrollY / windowH, 0, 1);
-      timersOuter.style.top = `${100 - timersProgress * 100}vh`;
-
-      // Мобильная версия: показываем/прячем таймеры справа или снизу
-      if (isMobile) {
-        rightBlock.style.display = 'none';
-        mobileTimers.style.display = 'flex';
-      } else {
-        rightBlock.style.display = 'flex';
-        mobileTimers.style.display = 'none';
-      }
     }
     function onScroll() {
       if (!ticking) {
